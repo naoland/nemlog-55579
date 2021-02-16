@@ -21,16 +21,32 @@
 ### デメリット
 
 - ある程度のプログラミングの知識が必要。今回の場合だと`Python`言語の文法について多少知っている必要があります。
-- 細かい位置調整
+- 細かい位置調整は面倒くさい
 
 ## 条件によってチャートの出力を動的に変更
 
+今回の例では、ZEMの最終価格をZaif取引所のAPIから取得して、その結果によって異なるフローチャートを生成します。
+
+出力形式はPNGやJPG、SVG、PDFなどを指定できます。
 
 
 ## 出力結果
 
+![](./images/example_flow1.png)
+![](./images/example_flow2.png)
+
+## コードの内容
+
+```
+
+```
 
 ## まとめ
+
+いかがでしたでしょうか？
+フローチャートをプログラムで書くことで、条件によって異なる内容のフローチャートを生成できる事がご理解いただけたと思います。
+
+より複雑なフローチャートを書く時は、条件などを正しく指定すればシミレーション代わりとしても使えるのではないかと思います。
 
 
 ## 関連情報へのリンク
@@ -40,6 +56,9 @@
 - [Graphviz - Graph Visualization Software - Resources](https://www.graphviz.org/resources/)
 - [Graphviz Online](http://dreampuf.github.io/GraphvizOnline/)
 
+### Zaif API
+
+- [techbureau/zaifapi: zaifのAPIを簡単にコール出来るようにしました。](https://github.com/techbureau/zaifapi)
 
 ### 作図ツール
 
