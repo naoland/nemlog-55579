@@ -28,14 +28,14 @@
 出力形式はPNGやJPG、SVG、PDFなどを指定できますが、今回はpngで出力しています。
 
 
-## 出力結果
+### 出力結果
 
 左の図は`XEM`が40円以上、右の図は`XEM`が40円未満の場合です。
 
 ![](./images/example_flow1.png)
 ![](./images/example_flow2.png)
 
-## コードの内容
+### コードの内容
 
 ```python
 import sys
