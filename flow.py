@@ -8,6 +8,7 @@ from zaifapi import ZaifPublicApi, ZaifFuturesPublicApi, ZaifLeverageTradeApi
 
 FILENAME: str = "dist/flow.dot"
 DEBUG: bool = True
+THRESHOLD: float = 40.0
 
 
 def last_price(pair: str = "xem_jpy") -> float:
@@ -27,7 +28,7 @@ def flow(price: float, format: str = "png", comment: str = "") -> None:
 
     dot.node("start", "開始")
     dot.node("step1", "NEM（XEM）の最終価格を取得します", shape="box")
-    if price >= 40.0:
+    if price >= THRESHOLD:
         dot.node(
             "step2",
             str(f"取得結果：{price} JPY"),
@@ -49,7 +50,7 @@ def flow(price: float, format: str = "png", comment: str = "") -> None:
     dot.edge("start", "step1")
     dot.edge("step1", "step2")
     dot.edge("step2", "step3")
-    if price >= 40.0:
+    if price >= THRESHOLD:
         dot.node("step4-y", "売り時を待つ", shape="box")
         dot.edge("step3", "step4-y", label=" YES")
         dot.edge("step4-y", "end")
