@@ -30,6 +30,8 @@
 
 ## 出力結果
 
+左の図は`XEM`が40円以上、右の図は`XEM`が40円未満の場合です。
+
 ![](./images/example_flow1.png)
 ![](./images/example_flow2.png)
 
@@ -42,6 +44,7 @@ from zaifapi import ZaifPublicApi, ZaifFuturesPublicApi, ZaifLeverageTradeApi
 
 FILENAME: str = "dist/flow.dot"
 DEBUG: bool = True
+THRESHOLD: float = 40.0 # 閾値
 
 
 def last_price(pair: str = "xem_jpy") -> float:
@@ -61,7 +64,7 @@ def flow(price: float, format: str = "png", comment: str = "") -> None:
 
     dot.node("start", "開始")
     dot.node("step1", "NEM（XEM）の最終価格を取得します", shape="box")
-    if price >= 40.0:
+    if price >= THRESHOLD:
         dot.node(
             "step2",
             str(f"取得結果：{price} JPY"),
@@ -83,7 +86,7 @@ def flow(price: float, format: str = "png", comment: str = "") -> None:
     dot.edge("start", "step1")
     dot.edge("step1", "step2")
     dot.edge("step2", "step3")
-    if price >= 40.0:
+    if price >= THRESHOLD:
         dot.node("step4-y", "売り時を待つ", shape="box")
         dot.edge("step3", "step4-y", label=" YES")
         dot.edge("step4-y", "end")
@@ -102,17 +105,20 @@ if __name__ == "__main__":
         message = f"XEM現在価格: {price} JPY"
         if DEBUG:
             print(message)
-        flow(price, format="svg")
+        flow(price, format="png")
     except:
         print(f"エラーが発生しました: {sys.exc_info()}")
 ```
 
-## 自分でも試してみたい方は
+## 動作確認
 
-自分でも試してみたい方は次のように進めてください。
+自分でも試してみたい方は以下のように進めてください。ぜひ条件を変更して試してみてください。
 
-Linux環境で動作します。Termux上でも動作確認済みです。
+```python
+THRESHOLD: float = 40.0 # 閾値
+```
 
+アンドロイドのTermux上でも動作確認済みです。UbuntuなどのLinuxでも動作すると思います（Ubuntu 20.04 LTS上では確認済み）。
 
 
 任意の場所にリポジトリをダウンロードします。
@@ -127,8 +133,74 @@ Linux環境で動作します。Termux上でも動作確認済みです。
 & cd nemlog-55579
 ```
 
+Pythonのがインストール済みか確認します。
 
+```
+$ make version
+```
 
+実行結果
+
+```
+ $ make version
+/data/data/com.termux/files/usr/bin/python
+Python 3.9.1
+```
+
+Pythonの仮想環境を作り、必要なライブラリをインストールします。
+コマンドが終了するまでに結構時間がかかります。
+
+```
+$ make init
+```
+
+実行結果の表示はかなり長いので省略します。
+
+なお、上記コマンドは1度だけ実行してください。またコマンドが終了するまでに結構時間がかかります。
+
+Pythonプログラム`flow.py`を実行し、フローチャートの画像を`png`形式の画像ファイルとして出力します。
+
+```
+$ make run
+```
+
+実行結果
+
+```
+$ make run
+./venv/bin/python ./flow.py
+XEM現在価格: 40.1699 JPY
+```
+
+エラーが発生しなかった場合は、`dict`というディレクトリ内に、画像ファイルとドットファイルができているはずです。
+ドットファイルについては今回は説明を割愛しますが、`Graphviz`の`dot`コマンドで画像ファイルを生成する際に使用します'
+
+```
+dist
+├── flow.dot
+└── flow.dot.png
+```
+
+フローチャートの画像ファイルをアンドロイドのファイラーアプリで閲覧、共有できる場所にコピーします。
+
+注意）Termuxを使用していない場合は、Linuxのファイラーなどでクリックするか、ブラウザにドラッグアンドドロップして画像を表示してください。
+
+```
+$ make copy
+```
+
+実行結果
+
+```
+$ make copy
+cp ./dist/flow.dot.png ~/storage/downloads
+```
+
+ファイルマネージャーというアンドロい用アプリを使うことを推奨します。関連情報へのリンクを参照してください。
+
+ファイルマネージャーの`ダウンロード`というフォルダーに`flow.dot.png`が表示されているはずなので、それをタップします。次のように表示されると思います。
+
+![](./images/flow.dot.png)
 
 
 ## まとめ
@@ -141,6 +213,11 @@ Linux環境で動作します。Termux上でも動作確認済みです。
 
 
 ## 関連情報へのリンク
+
+### ファイルマネージャー
+
+- [ファイルマネージャー - Google Play のアプリ](https://play.google.com/store/apps/details?id=com.alphainventor.filemanager)
+- [Android向けファイルマネージャーアプリのおすすめ人気ランキング8選【2020年最新版】 | mybest](https://my-best.com/6141#toc-1)
 
 ### Graphviz関連
 
