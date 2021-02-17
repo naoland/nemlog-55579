@@ -6,7 +6,7 @@ init:
 	./venv/bin/pip install --upgrade pip
 	./venv/bin/pip install -r requirements.txt
 run:
-	./venv/bin/python ./flow-mix.py
+	./venv/bin/python ./flow.py
 copy:
 	cp ./dist/flow.dot.png ~/storage/downloads
 test:
