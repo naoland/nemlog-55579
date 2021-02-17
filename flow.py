@@ -68,6 +68,6 @@ if __name__ == "__main__":
         message = f"XEM現在価格: {price} JPY"
         if DEBUG:
             print(message)
-        flow(price, format="svg")
+        flow(price, format="png")
     except:
         print(f"エラーが発生しました: {sys.exc_info()}")
